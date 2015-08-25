@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="scrumBoardApp">
+  <head>
+    <title>GLL- Scrum Board</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css"/>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/angular/angular.js"></script>
+    <script src="/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/mainController.js"></script>
+    <script src="app/accounts/account-service.js"></script>
+    <script src="app/home/home-service.js"></script>
+
+  </head>
+  <body ng-controller="mainController">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Board and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Scrum Board</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#/register" ng-hide="show.Register">Register</a></li>
+          <li><a href="#/login" ng-hide="show.Login">Login</a></li>
+          <li><a href="#/" ng-hide="show.Logout" ng-click="logout()">Logout</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div ui-view></div>
+
+  </body>
+</html>

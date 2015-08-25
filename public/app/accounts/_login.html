@@ -1,0 +1,26 @@
+
+<div class="text-center row scrumBoard">
+    <div class="col-lg-12 col-md-6 col-sm-8 col-xs-8">
+        <h3>Sign In</h3>
+        <form class="navbar-form" action="/login" method="post">
+            <div class="form-group">
+                <div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2"></span>
+                        <input ng-model="user.username" type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2"></span>
+                        <input ng-model="user.password" type="password" class="form-control" name="password" placeholder="Password" aria-describedby="sizing-addon2"/>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="login()">Login</button>
+            </div>
+        </form>
+
+        <div><span ng-if="login_err" class="error">Error while logging in!</span></div>
+
+    </div>
+</div>
