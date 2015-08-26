@@ -24,6 +24,8 @@ app.use(cookieParser());
 
 // set up authentication
 require('./modules/authentication/authentication-app')(app);
+require('./modules/scrum/scrum-app')(app);
+require('./modules/sprint/sprint-app')(app);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
