@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/roster', function(req, res) {
-    attendance.find({}, function (err, result) {
+    attendance.find(req.query, function (err, result) {
         if(err) res.status(500).json(err);
         else res.status(200).json(result);
     });
