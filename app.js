@@ -38,6 +38,7 @@ mongoose.connect('mongodb://localhost/scrum-board', function (err) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/attendance', require('./modules/attendance/attendance-route'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

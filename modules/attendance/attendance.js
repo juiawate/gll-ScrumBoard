@@ -3,10 +3,11 @@ var mongoose = require('mongoose'),
 
 var Attendance = new Schema({
     date: Date,
-    userId: ObjectId,
+    userId: String, // TODO: use ObjectId instead of String
     action: String,  // checkin or checkout
     geocode: Array,  // [latitude, longitude]
     ipAddress: String
 });
 
 module.exports = mongoose.model('Attendance', Attendance);
+
