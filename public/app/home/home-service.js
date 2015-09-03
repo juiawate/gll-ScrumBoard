@@ -1,6 +1,6 @@
 
 angular.module('scrumBoardApp.home', [])
-    .controller('HomeController', ['$scope', '$interval', '$location', 'Accounts', function ($scope, $interval, $location, Accounts) {
+    .controller('HomeController', ['$scope', '$interval', '$location', 'HomeAccounts', 'Accounts', function ($scope, $interval, $location, HomeAccounts, Accounts) {
         $scope.update(false, true, true);
         $scope.user = Accounts.user;
         $scope.checkIn_err = false;
@@ -14,7 +14,7 @@ angular.module('scrumBoardApp.home', [])
         $scope.checkOut = function () {
             $scope.timestamp = new Date();
             console.log('checkout:', $scope.timestamp);
-            Accounts.checkOut($scope.user).then(function (data) {
+            HomeAccounts.checkOut($scope.user).then(function (data) {
                 $location.path('/home');
             }, function (data) {
                 $scope.checkOut_err = true;
@@ -25,7 +25,7 @@ angular.module('scrumBoardApp.home', [])
         $scope.checkIn = function () {
             $scope.timestamp = new Date();
             console.log('checkin:', $scope.timestamp);
-            Accounts.checkIn($scope.user).then(function (data) {
+            HomeAccounts.checkIn($scope.user).then(function (data) {
                 $location.path('/home');
             }, function (data) {
                 $scope.checkIn_err = true;
@@ -33,4 +33,33 @@ angular.module('scrumBoardApp.home', [])
                 if (data.message) $scope.error_msg = data.message;
             });
         };
-    }]);
+    }])
+    .service('HomeAccounts', function ($http, $q) {
+        var _user = null;
+        return {
+            checkIn: function(user){
+                return $q(function (resolve, reject) {
+                    $http.post('/attendance/roster', user).success(function (data) {
+                        _user = data.user;
+                        console.log('user:', user.userId);
+                        resolve(_user);
+                    }).error(function (data) {
+                        reject(data);
+                    });
+                });
+            },
+            checkOut: function(user){
+                return $q(function (resolve, reject) {
+                    $http.post('/attendance/roster', user).success(function (data) {
+                        _user = data.user;
+                        resolve(_user);
+                    }).error(function (data) {
+                        reject(data);
+                    });
+                });
+            },
+            get user() {
+                return _user;
+            }
+        };
+    });

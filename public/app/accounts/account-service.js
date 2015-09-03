@@ -66,10 +66,11 @@ angular.module('scrumBoardApp.accounts', [])
                 });
             },
             checkIn: function(user){
+                user = {userId: 'pookie'};
                 return $q(function (resolve, reject) {
                     $http.post('/attendance/roster', user).success(function (data) {
                         _user = data.user;
-                        console.log(data);
+                        console.log(_user);
                         resolve(_user);
                     }).error(function (data) {
                         reject(data);
