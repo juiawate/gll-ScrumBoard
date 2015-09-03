@@ -41,7 +41,8 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
     if(req.user){
         res.status(200).json({user: {
             name: req.user.name,
-            id: req.user._id
+            id: req.user._id,
+            userId: req.user.username
         }});
     }
 });

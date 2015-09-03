@@ -18,9 +18,14 @@ router.get('/roster', function(req, res) {
 });
 
 router.post('/roster', function(req, res) {
+    console.log(req.body);
     (new attendance(req.body)).save(function(err, result){
         if(err) res.status(500).json(err);
-        else res.status(200).json({message: "POST attendance success"});
+        else res.status(200).json({user: {
+            name: req.user.name,
+            id: req.user._id,
+            userId: req.user.username
+        }});
     });
 });
 

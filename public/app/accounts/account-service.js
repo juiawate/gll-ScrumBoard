@@ -21,6 +21,7 @@ angular.module('scrumBoardApp.accounts', [])
         $scope.user = {};
         $scope.login_err = false;
         $scope.login = function () {
+            console.log($scope.user);
             Accounts.login($scope.user).then(function (data) {
                 $location.path('/home');
             }, function (data) {
@@ -60,28 +61,6 @@ angular.module('scrumBoardApp.accounts', [])
                 return $q(function (resolve, reject) {
                     $http.get('/authenticate/logout').success(function (data) {
                         resolve(data);
-                    }).error(function (data) {
-                        reject(data);
-                    });
-                });
-            },
-            checkIn: function(user){
-                user = {userId: 'pookie'};
-                return $q(function (resolve, reject) {
-                    $http.post('/attendance/roster', user).success(function (data) {
-                        _user = data.user;
-                        console.log(_user);
-                        resolve(_user);
-                    }).error(function (data) {
-                        reject(data);
-                    });
-                });
-            },
-            checkOut: function(user){
-                return $q(function (resolve, reject) {
-                    $http.post('/attendance/roster', user).success(function (data) {
-                        _user = data.user;
-                        resolve(_user);
                     }).error(function (data) {
                         reject(data);
                     });

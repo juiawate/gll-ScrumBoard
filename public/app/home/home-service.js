@@ -39,9 +39,11 @@ angular.module('scrumBoardApp.home', [])
         return {
             checkIn: function(user){
                 return $q(function (resolve, reject) {
+                    //user.userId = 'testid';
+                    console.log('before:', user);
                     $http.post('/attendance/roster', user).success(function (data) {
+                        console.log('user:', data.user);
                         _user = data.user;
-                        console.log('user:', user.userId);
                         resolve(_user);
                     }).error(function (data) {
                         reject(data);
