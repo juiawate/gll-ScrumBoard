@@ -11,7 +11,8 @@ router.get('/', function(req, res) {
 router.get('/validate', function(req, res) {
     if (req.user) res.status(200).json({ user: {
         name: req.user.name,
-        id: req.user._id
+        id: req.user._id,
+        userId: req.user.username
     } });
     else res.status(401).json({user: null});
 });
