@@ -65,6 +65,27 @@ angular.module('scrumBoardApp.accounts', [])
                     });
                 });
             },
+            checkIn: function(user){
+                return $q(function (resolve, reject) {
+                    $http.post('/attendance/roster', user).success(function (data) {
+                        _user = data.user;
+                        console.log(data);
+                        resolve(_user);
+                    }).error(function (data) {
+                        reject(data);
+                    });
+                });
+            },
+            checkOut: function(user){
+                return $q(function (resolve, reject) {
+                    $http.post('/attendance/roster', user).success(function (data) {
+                        _user = data.user;
+                        resolve(_user);
+                    }).error(function (data) {
+                        reject(data);
+                    });
+                });
+            },
             get user() {
                 return _user;
             }

@@ -2,10 +2,12 @@
 angular.module('scrumBoardApp').controller('mainController', ['$scope','$location','Accounts', function($scope, $location, Accounts){
     //console.log('Inside Main controller');
     $scope.show = {};
-    $scope.update = function(logout, login, register){
+    $scope.update = function(logout, login, register, checkIn, checkOut){
         $scope.show.Logout = logout;
         $scope.show.Login = login;
         $scope.show.Register = register;
+        $scope.show.CheckIn = checkIn;
+        $scope.show.CheckOut = checkOut;
     };
     $scope.update(true, false, false);
     $scope.logout = function () {

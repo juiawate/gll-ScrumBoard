@@ -13,6 +13,14 @@ angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home',
             url: '/home',
             templateUrl: 'app/home/_home.html',
             controller: 'HomeController'
+        }).state('checkIn', {
+            url:'/home',
+            templateUrl: 'app/home/_home.html',
+            controller: 'HomeController'
+        }).state('checkOut', {
+            url:'/home',
+            templateUrl: 'app/home/_home.html',
+            controller: 'HomeController'
         });
     $urlRouterProvider.otherwise('/');
 }).run(function (Accounts, $location) {
