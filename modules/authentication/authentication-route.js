@@ -2,19 +2,32 @@ var mongoose = require('mongoose'),
     passport = require('passport'),
     Members = require('./account'),
     express = require('express'),
-    router = express.Router();
+    router = express.Router(),
+    IpInfo = require("ipinfo");
 
 router.get('/', function(req, res) {
     if (req.user) res.status(200).json({message: req.user});
 });
 
 router.get('/validate', function(req, res) {
-    if (req.user) res.status(200).json({ user: {
-        name: req.user.name,
-        id: req.user._id,
-        userId: req.user.username
-    } });
-    else res.status(401).json({user: null});
+
+    IpInfo(function(err, cLoc) {
+        getCall(cLoc.ip);
+    });
+
+    function getCall(ip){
+        if (req.user){ res.status(200).json({ user: {
+            name: req.user.name,
+            id: req.user._id,
+            ipAddress: ip,
+            userId: req.user.username,
+            date: new Date(),
+            action: ''
+        } });}
+        else res.status(401).json({user: null});
+    }
+
+
 });
 
 router.get('/register', function(req, res) {

@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
     // Members = require('./account'),
     express = require('express'),
     router = express.Router(),
-    attendance = require('./attendance');
+    attendance = require('./attendance'),
+    IpInfo = require("ipinfo");
 
 router.get('/', function(req, res) {
     new attendance(req.body);
@@ -18,13 +19,17 @@ router.get('/roster', function(req, res) {
 });
 
 router.post('/roster', function(req, res) {
-    console.log(req.body);
-    (new attendance(req.body)).save(function(err, result){
+
+    new attendance(req.body).save(function(err, result){
         if(err) res.status(500).json(err);
         else res.status(200).json({user: {
             name: req.user.name,
             id: req.user._id,
-            userId: req.user.username
+            userId: req.user.username,
+            ipAddress: 0,
+            date: new Date(),
+            geocode: 0,
+            action: ''
         }});
     });
 });

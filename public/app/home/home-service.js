@@ -40,6 +40,7 @@ angular.module('scrumBoardApp.home', [])
             checkIn: function(user){
                 return $q(function (resolve, reject) {
                     console.log('user:', user);
+                    user.action = 'checkin';
                     $http.post('/attendance/roster', user).success(function (data) {
                         console.log('data.user:', data.user);
                         _user = data.user;
@@ -51,6 +52,7 @@ angular.module('scrumBoardApp.home', [])
             },
             checkOut: function(user){
                 return $q(function (resolve, reject) {
+                    user.action = 'checkout';
                     $http.post('/attendance/roster', user).success(function (data) {
                         _user = data.user;
                         resolve(_user);

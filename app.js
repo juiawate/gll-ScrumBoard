@@ -8,8 +8,13 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var get_ip = require('ipware')().get_ip;
 
 var app = express();
+
+app.enable('trust proxy');
+app.set('trust proxy', 'loopback');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
