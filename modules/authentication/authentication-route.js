@@ -11,21 +11,19 @@ router.get('/', function(req, res) {
 router.get('/validate', function(req, res) {
 
 
-    console.log(req.user);
+    console.log('line 14 of a-r',req.user);
     if (req.user){
-                res.status(200).json({ user: {
-                    name: req.user.name,
-                    id: req.user._id,
-                    ipAddress: 4752374368,
-                    userId: req.user.username,
-                    date: new Date(),
-                    action: ''
-                } });
-
-        }
+        res.status(200).json({ user: {
+            name: req.user.name,
+            id: req.user._id,
+            ipAddress: 4752374368,
+            userId: req.user.username,
+            date: new Date(),
+            type: req.user.type,
+            action: ''
+        } });
+    }
     else res.status(401).json({user: null});
-
-
 
 });
 

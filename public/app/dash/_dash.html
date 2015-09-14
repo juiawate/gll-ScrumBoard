@@ -1,0 +1,20 @@
+
+<div class="container">
+    <h3>Welcome, {{user.name}}. This is your admin dashboard</h3>
+</div>
+
+<div class="container" ng-show="dataList.length">
+    <h3>Your previous actions:</h3>
+    <div class="entryList">
+        <table class="table table-bordered table-striped" ng-init="showEntries()">
+            <tr>
+                <th>Action</th>
+                <th>Date and Time</th>
+            </tr>
+            <tr ng-repeat="el in dataList">
+                <td>{{el.action}}</td>
+                <td>{{prettyDate(el.date)}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
