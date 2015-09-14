@@ -1,9 +1,13 @@
 angular.module('scrumBoardApp.home', [])
-    .controller('HomeController', ['$scope', '$interval', '$location', 'HomeAccounts', 'Accounts', function ($scope, $interval, $location, HomeAccounts, Accounts) {
+    .controller('HomeController', ['$scope', '$interval', '$http', '$location', 'HomeAccounts', 'Accounts', function ($scope, $interval, $http, $location, HomeAccounts, Accounts) {
         $scope.update(false, true, true);
+        $scope.showEntries = function () {
+            $http.get('/attendance/roster').success(function (result) {
+               $scope.dataList = result;
+                console.log('line 7:', $scope.dataList);
+            });
+        };
         $scope.user = Accounts.user;
-        //console.log('collections', Collections);
-        $scope.entries = [];
         $scope.prettyDate  = function(inDate){
             var date = '' + inDate;
             return date;
@@ -19,12 +23,6 @@ angular.module('scrumBoardApp.home', [])
         $scope.checkOut = function () {
             $scope.timestamp = new Date();
             HomeAccounts.checkOut($scope.user).then(function (data) {
-                var myUser = {};
-                for(prop in $scope.user){
-                    myUser[prop] = $scope.user[prop];
-                }
-                myUser.date = new Date();
-                $scope.entries.push(myUser);
                 $location.path('/home');
             }, function (data) {
                 $scope.checkOut_err = true;
@@ -35,11 +33,6 @@ angular.module('scrumBoardApp.home', [])
         $scope.checkIn = function () {
             $scope.timestamp = new Date();
             HomeAccounts.checkIn($scope.user).then(function (data) {
-                var myUser = {};
-                for(prop in $scope.user){
-                    myUser[prop] = $scope.user[prop];
-                }
-                $scope.entries.push(myUser);
                 $location.path('/home');
             }, function (data) {
                 $scope.checkIn_err = true;

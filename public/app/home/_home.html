@@ -11,16 +11,18 @@
     <span class="inOn" ng-show="checkedin">Checked in on {{timestamp | date : "MM/dd/yyyy ' at ' h:mma"}}</span>
 </div>
 
-<div class="container">
+<div class="container" ng-show="dataList.length">
     <h3>Your previous actions:</h3>
-    <table class="table table-bordered table-striped">
+    <div class="entryList">
+        <table class="table table-bordered table-striped" ng-init="showEntries()">
         <tr>
             <th>Action</th>
             <th>Date and Time</th>
         </tr>
-        <tr ng-repeat="el in entries track by $index">
+        <tr ng-repeat="el in dataList">
             <td>{{el.action}}</td>
             <td>{{prettyDate(el.date)}}</td>
         </tr>
-    </table>
+        </table>
+    </div>
 </div>

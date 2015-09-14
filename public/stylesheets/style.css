@@ -27,3 +27,7 @@ div{
   color: green;
 }
 
+.entryList{
+  max-height: 300px;
+  overflow: auto;
+}
