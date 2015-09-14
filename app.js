@@ -5,12 +5,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var IpInfo = require("ipinfo");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var get_ip = require('ipware')().get_ip;
 
 var app = express();
+
+IpInfo(function (err, cLoc) {
+  console.log('IP:', cLoc.ip);
+  console.log('GeoLocation:', cLoc.loc);
+
+});
 
 app.enable('trust proxy');
 app.set('trust proxy', 'loopback');
@@ -31,7 +37,12 @@ app.use(cookieParser());
 require('./modules/authentication/authentication-app')(app);
 require('./modules/scrum/scrum-app')(app);
 require('./modules/sprint/sprint-app')(app);
-
+/*
+require("angoose").init(app, {
+  'module-dirs':'./modules',
+  'mongo-opts': 'localhost:5000/test',
+});
+*/
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
@@ -39,7 +50,6 @@ mongoose.connect('mongodb://localhost/scrum-board', function (err) {
   if (err) console.log('Error: Failed to connect to mongoose!');
   else console.log('Connected to mongodb!');
 });
-
 
 app.use('/', routes);
 app.use('/users', users);

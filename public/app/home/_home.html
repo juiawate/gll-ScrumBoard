@@ -1,7 +1,26 @@
 
-<h3>Welcome {{user.name}}</h3>
-<h2>The current time is {{time | date : 'h:mm:ssa'}}</h2>
+<div class="container">
+    <h3>Welcome, {{user.name}}</h3>
+    <span id="currentTime">The current time is {{time | date : 'h:mm:ssa'}}</span>
+</div>
 
-<p ng-show="checkedin">Checked in on {{timestamp | date : "MM/dd/yyyy ' at ' h:mma"}}</p>
-<button ng-hide="checkedin" ng-click="checkedin = !checkedin; checkIn();" type="button">Check In</button>
-<button ng-show="checkedin" ng-click="checkedin = !checkedin; checkOut();" type="button">Check Out</button>
+<div class="container">
+    <br>
+    <button class="btn btn-default" ng-hide="checkedin" ng-click="checkedin = !checkedin; checkIn();" type="button"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Check In</button>
+    <button class="btn btn-default" ng-show="checkedin" ng-click="checkedin = !checkedin; checkOut();" type="button"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Check Out</button>
+    <span class="inOn" ng-show="checkedin">Checked in on {{timestamp | date : "MM/dd/yyyy ' at ' h:mma"}}</span>
+</div>
+
+<div class="container">
+    <h3>Your previous actions:</h3>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Action</th>
+            <th>Date and Time</th>
+        </tr>
+        <tr ng-repeat="el in entries track by $index">
+            <td>{{el.action}}</td>
+            <td>{{prettyDate(el.date)}}</td>
+        </tr>
+    </table>
+</div>

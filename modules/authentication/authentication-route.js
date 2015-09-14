@@ -2,8 +2,7 @@ var mongoose = require('mongoose'),
     passport = require('passport'),
     Members = require('./account'),
     express = require('express'),
-    router = express.Router(),
-    IpInfo = require("ipinfo");
+    router = express.Router();
 
 router.get('/', function(req, res) {
     if (req.user) res.status(200).json({message: req.user});
@@ -11,21 +10,21 @@ router.get('/', function(req, res) {
 
 router.get('/validate', function(req, res) {
 
-    IpInfo(function(err, cLoc) {
-        getCall(cLoc.ip);
-    });
 
-    function getCall(ip){
-        if (req.user){ res.status(200).json({ user: {
-            name: req.user.name,
-            id: req.user._id,
-            ipAddress: ip,
-            userId: req.user.username,
-            date: new Date(),
-            action: ''
-        } });}
-        else res.status(401).json({user: null});
-    }
+    console.log(req.user);
+    if (req.user){
+                res.status(200).json({ user: {
+                    name: req.user.name,
+                    id: req.user._id,
+                    ipAddress: 4752374368,
+                    userId: req.user.username,
+                    date: new Date(),
+                    action: ''
+                } });
+
+        }
+    else res.status(401).json({user: null});
+
 
 
 });
@@ -51,6 +50,7 @@ router.get('/login', function(req, res) {
     //console.log('login get request: ',req.user);
     res.render('login', { user: req.user });
 });
+
 router.post('/login', passport.authenticate('local'), function(req, res) {
     if(req.user){
         res.status(200).json({user: {

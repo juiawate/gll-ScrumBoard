@@ -1,8 +1,13 @@
-
 angular.module('scrumBoardApp.home', [])
     .controller('HomeController', ['$scope', '$interval', '$location', 'HomeAccounts', 'Accounts', function ($scope, $interval, $location, HomeAccounts, Accounts) {
         $scope.update(false, true, true);
         $scope.user = Accounts.user;
+        //console.log('collections', Collections);
+        $scope.entries = [];
+        $scope.prettyDate  = function(inDate){
+            var date = '' + inDate;
+            return date;
+        };
         $scope.checkIn_err = false;
         $scope.checkOut_err = false;
         $scope.checkedin = false;
@@ -13,8 +18,13 @@ angular.module('scrumBoardApp.home', [])
         $scope.timestamp = 0;
         $scope.checkOut = function () {
             $scope.timestamp = new Date();
-            console.log('checkout:', $scope.timestamp);
             HomeAccounts.checkOut($scope.user).then(function (data) {
+                var myUser = {};
+                for(prop in $scope.user){
+                    myUser[prop] = $scope.user[prop];
+                }
+                myUser.date = new Date();
+                $scope.entries.push(myUser);
                 $location.path('/home');
             }, function (data) {
                 $scope.checkOut_err = true;
@@ -24,14 +34,19 @@ angular.module('scrumBoardApp.home', [])
         };
         $scope.checkIn = function () {
             $scope.timestamp = new Date();
-            console.log('checkin:', $scope.timestamp);
             HomeAccounts.checkIn($scope.user).then(function (data) {
+                var myUser = {};
+                for(prop in $scope.user){
+                    myUser[prop] = $scope.user[prop];
+                }
+                $scope.entries.push(myUser);
                 $location.path('/home');
             }, function (data) {
                 $scope.checkIn_err = true;
                 $scope.user = {};
                 if (data.message) $scope.error_msg = data.message;
             });
+            console.log('checkin:', $scope.timestamp);
         };
     }])
     .service('HomeAccounts', function ($http, $q) {
@@ -39,11 +54,11 @@ angular.module('scrumBoardApp.home', [])
         return {
             checkIn: function(user){
                 return $q(function (resolve, reject) {
-                    console.log('user:', user);
                     user.action = 'checkin';
+                    user.date = new Date();
                     $http.post('/attendance/roster', user).success(function (data) {
-                        console.log('data.user:', data.user);
                         _user = data.user;
+                        console.log('line 55',_user);
                         resolve(_user);
                     }).error(function (data) {
                         reject(data);

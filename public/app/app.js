@@ -27,7 +27,7 @@ angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home',
     Accounts.validate().then(function (results) {
         if(results) {
             console.log(results);
-            Accounts.user = results.name;
+            Accounts.user = results;
             $location.path('/home');
         }
         else $location.path('/login');

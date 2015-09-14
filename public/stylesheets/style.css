@@ -7,6 +7,13 @@ a {
   color: #00B7FF;
 }
 
+#currentTime{
+  font-size: 2em;
+}
+
+div{
+  margin: 0 auto;
+}
 
 .scrumBoard .input-group {
   padding: 5px;
@@ -15,3 +22,8 @@ a {
 .error {
   color: red;
 }
+
+.inOn{
+  color: green;
+}
+
