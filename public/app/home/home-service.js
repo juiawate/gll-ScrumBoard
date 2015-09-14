@@ -1,12 +1,6 @@
 angular.module('scrumBoardApp.home', [])
     .controller('HomeController', ['$scope', '$interval', '$http', '$location', 'HomeAccounts', 'Accounts', function ($scope, $interval, $http, $location, HomeAccounts, Accounts) {
         $scope.update(false, true, true);
-        $scope.showEntries = function () {
-            $http.get('/attendance/roster').success(function (result) {
-               $scope.dataList = result;
-                console.log('line 7:', $scope.dataList);
-            });
-        };
         $scope.user = Accounts.user;
         $scope.prettyDate  = function(inDate){
             var date = '' + inDate;
@@ -40,6 +34,14 @@ angular.module('scrumBoardApp.home', [])
                 if (data.message) $scope.error_msg = data.message;
             });
             console.log('checkin:', $scope.timestamp);
+        };
+        $scope.showEntries = function (name) {
+            name = $scope.user.userId;
+            var url = '/attendance/roster?userId=' + name;
+            $http.get(url).success(function (result) {
+                $scope.dataList = result;
+                console.log('line 7:', $scope.dataList);
+            });
         };
     }])
     .service('HomeAccounts', function ($http, $q) {
