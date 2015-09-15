@@ -46,7 +46,7 @@ require("angoose").init(app, {
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-mongoose.connect('mongodb://localhost/scrum-board', function (err) {
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/scrum-board', function (err) {
   if (err) console.log('Error: Failed to connect to mongoose!');
   else console.log('Connected to mongodb!');
 });
