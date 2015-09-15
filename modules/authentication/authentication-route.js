@@ -20,7 +20,8 @@ router.get('/validate', function(req, res) {
             userId: req.user.username,
             date: new Date(),
             type: req.user.type,
-            action: ''
+            action: '',
+            status: 'out'
         } });
     }
     else res.status(401).json({user: null});

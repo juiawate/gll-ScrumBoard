@@ -18,6 +18,8 @@ router.get('/roster', function(req, res) {
     });
 });
 
+//router.put
+
 router.post('/roster', function(req, res) {
 
     new attendance(req.body).save(function(err, result){

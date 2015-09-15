@@ -43,6 +43,9 @@ angular.module('scrumBoardApp.home', [])
                 console.log('line 7:', $scope.dataList);
             });
         };
+        $scope.updateStatus = function () {
+            
+        }
     }])
     .service('HomeAccounts', function ($http, $q) {
         var _user = null;

@@ -4,16 +4,20 @@
 </div>
 
 <div class="container" ng-show="dataList.length">
-    <h3>Your previous actions:</h3>
+    <h3>Most recent activity:</h3>
     <div class="entryList">
         <table class="table table-bordered table-striped" ng-init="showEntries()">
             <tr>
+                <th>User</th>
                 <th>Action</th>
                 <th>Date and Time</th>
+                <th>Location</th>
             </tr>
             <tr ng-repeat="el in dataList">
+                <td>{{el.userId}}</td>
                 <td>{{el.action}}</td>
                 <td>{{prettyDate(el.date)}}</td>
+                <td>{{el.geocode}}</td>
             </tr>
         </table>
     </div>

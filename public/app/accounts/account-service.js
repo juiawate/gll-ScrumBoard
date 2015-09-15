@@ -5,6 +5,7 @@ angular.module('scrumBoardApp.accounts', [])
         $scope.user = {};
         $scope.signup = function () {
             $scope.user.type = $scope.user.type || 'Member';
+            $scope.user.status = 'out';
             Accounts.register($scope.user).success(function (data) {
                 $scope.registration_err = false;
                 $scope.user = {};

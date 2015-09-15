@@ -1,5 +1,5 @@
 
-angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home', 'ui.router']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home', 'scrumBoardApp.dash', 'ui.router']).config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('register', {
             url: '/register',

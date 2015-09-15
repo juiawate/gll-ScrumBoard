@@ -2,7 +2,7 @@
  * Created by natalie on 9/14/2015.
  */
 angular.module('scrumBoardApp.dash', [])
-    .controller('DashController', ['$scope', '$interval', '$http', '$location', 'DashAccounts', 'Accounts', function ($scope, $interval, $http, $location, DashAccounts, Accounts) {
+    .controller('DashController', ['$scope', '$interval', '$http', '$location', 'Accounts', function ($scope, $interval, $http, $location, Accounts) {
         $scope.update(false, true, true);
         $scope.user = Accounts.user;
         console.log('line 8 of dash-s', $scope.user);
@@ -19,11 +19,3 @@ angular.module('scrumBoardApp.dash', [])
             });
         };
     }])
-    .service('DashAccounts', function ($http, $q) {
-        var _user = null;
-        return {
-            get user() {
-                return _user;
-            }
-        };
-    });

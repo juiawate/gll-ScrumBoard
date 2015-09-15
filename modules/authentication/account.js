@@ -7,7 +7,8 @@ var Members = new Schema({
     name: String,
     type: String,
     team: String,
-    url_git: String
+    url_git: String,
+    status: String
 });
 
 Members.plugin(passportLocalMongoose);
