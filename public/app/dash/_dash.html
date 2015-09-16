@@ -1,28 +1,42 @@
 
 <div class="container">
-    <h3>Welcome, {{user.name}}. This is your admin dashboard</h3>
-</div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Welcome, {{user.name}}. This is your admin dashboard</h3>
+        </div>
 
-<div>
-    Students currently checked in: {{inCount}}
-</div>
+        <div class="col-md-4">
+            <h3>Students currently checked in: {{inCount}}<h3>
+                <div ng-show="presentList.length">
+                    <table class="table table-bordered table-striped" ng-init="showEntries()">
+                        <tr>
+                            <th>User</th>
+                        </tr>
+                        <tr ng-repeat="el in presentList">
+                            <td>{{el.username}}</td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
 
-<div class="container" ng-show="dataList.length">
-    <h3>Most recent activity:</h3>
-    <div class="entryList">
-        <table class="table table-bordered table-striped" ng-init="showEntries()">
-            <tr>
-                <th>User</th>
-                <th>Action</th>
-                <th>Date and Time</th>
-                <th>Location</th>
-            </tr>
-            <tr ng-repeat="el in dataList">
-                <td>{{el.userId}}</td>
-                <td>{{el.action}}</td>
-                <td>{{prettyDate(el.date)}}</td>
-                <td>{{el.geocode}}</td>
-            </tr>
-        </table>
+    <div class="col-md-12" ng-show="dataList.length">
+        <h3>Most recent activity:</h3>
+        <div class="entryList">
+            <table class="table table-bordered table-striped" ng-init="showEntries()">
+                <tr>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Date and Time</th>
+                    <th>Location</th>
+                </tr>
+                <tr ng-repeat="el in dataList">
+                    <td>{{el.userId}}</td>
+                    <td>{{el.action}}</td>
+                    <td>{{prettyDate(el.date)}}</td>
+                    <td>{{el.geocode}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

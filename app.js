@@ -12,15 +12,16 @@ var users = require('./routes/users');
 
 var app = express();
 
-IpInfo(function (err, cLoc) {
- // console.log('IP:', cLoc.ip);
- // console.log('GeoLocation:', cLoc.loc);
+/*IpInfo(function (err, cLoc) {
+  console.log('IP:', cLoc.ip);
+  console.log('GeoLocation:', cLoc.loc);
+});*/
 
-});
+app.ipAddress = IpInfo;
 
 app.enable('trust proxy');
 app.set('trust proxy', 'loopback');
-
+console.log('line 23 of app',app.ipAddress);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

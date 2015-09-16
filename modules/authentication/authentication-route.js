@@ -9,15 +9,12 @@ router.get('/', function(req, res) {
 });
 
 router.get('/all', function (req,res) {
-    console.log('line 12 of auth-r');
     Members.find({type: "Member", status:"in"}, function(err, p){
         if (p) res.status(200).json({message: p});
     });
 });
 
-router.route('/validate')
-    .get(function(req, res) {
-        console.log('line 14 of auth-r',req.user);
+router.get('/validate', function(req, res) {
         if (req.user){
             res.status(200).json({ user: {
                 name: req.user.name,
@@ -30,21 +27,25 @@ router.route('/validate')
             } });
         }
         else res.status(401).json({user: null});
-    })
-    .put(function (req,res) {
-        Members.findById(req.params.id, function (err, p) {
+    });
+
+router.patch('/status',function (req,res) {
+        req.params.id = {username:req.body.userId};
+        Members.find(req.params.id, function (err, p) {
             if(!p){
+                console.log('failed',p);
                 return undefined;
             }
             else{
-                console.log('line 25 of auth-r',req.body.action);
                 if(req.body.action === 'checkout'){
                     p.status = 'out';
                 }
                 else if(req.body.action === 'checkin'){
                     p.status = 'in';
                 }
-                p.save(function (err) {
+                console.log('line 46 of auth-r',req.body.userId, p);
+                console.log('status from line 47 of auth-r', p.status);
+                Members.update( {username: req.body.userId},{$set:{status: p.status}},function (err) {
                     if(err){
                         console.log('Error');
                     }

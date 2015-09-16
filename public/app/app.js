@@ -31,7 +31,6 @@ angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home',
     Accounts.validate().then(function (results) {
         if(results) {
             Accounts.user = results;
-            console.log('line 35 of app/app',Accounts.user);
             if(Accounts.user.type === 'Admin'){
                 $location.path('/dash');
             }

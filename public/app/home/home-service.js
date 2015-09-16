@@ -33,14 +33,13 @@ angular.module('scrumBoardApp.home', [])
                 $scope.user = {};
                 if (data.message) $scope.error_msg = data.message;
             });
-            console.log('checkin:', $scope.timestamp);
+            console.log('checkin line 36:', $scope.user.userId);
         };
         $scope.showEntries = function (name) {
             name = $scope.user.userId;
             var url = '/attendance/roster?userId=' + name;
             $http.get(url).success(function (result) {
                 $scope.dataList = result;
-                console.log('line 7:', $scope.dataList);
             });
         };
         $scope.updateStatus = function () {
@@ -53,17 +52,17 @@ angular.module('scrumBoardApp.home', [])
             checkIn: function(user){
                 return $q(function (resolve, reject) {
                     user.action = 'checkin';
+                    console.log('line55 of h-s', user.userId);
                     user.date = new Date();
-                    $http.put('/authenticate/validate', user).success(function (data) {
-                        console.log('line 78 of h-s');
+                    $http.patch('/authenticate/status', user).success(function (data) {
                         _user = data.user;
-                        resolve(_userStatus);
+                        console.log()
+                        resolve(_user);
                     }).error(function (data) {
                         reject(data);
                     });
                     $http.post('/attendance/roster', user).success(function (data) {
                         _user = data.user;
-                        console.log('line 59',_user);
                         resolve(_user);
                     }).error(function (data) {
                         reject(data);
@@ -74,15 +73,13 @@ angular.module('scrumBoardApp.home', [])
                 return $q(function (resolve, reject) {
                     user.action = 'checkout';
                     user.date = new Date();
-                    $http.put('/authenticate/validate', user).success(function (data) {
-                        console.log('line 78 of h-s');
+                    $http.patch('/authenticate/status', user).success(function (data) {
                         _user = data.user;
-                        resolve(_userStatus);
+                        resolve(_user);
                     }).error(function (data) {
                         reject(data);
                     });
                     $http.post('/attendance/roster', user).success(function (data) {
-                        console.log('line 71 of h-s');
                         _user = data.user;
                         resolve(_user);
                     }).error(function (data) {
