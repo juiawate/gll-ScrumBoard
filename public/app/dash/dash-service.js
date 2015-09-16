@@ -17,5 +17,9 @@ angular.module('scrumBoardApp.dash', [])
                 $scope.dataList = result;
                 console.log('line 7:', $scope.dataList);
             });
+            $http.get('/authenticate/all').success(function (result) {
+                $scope.inCount = result.message.length;
+                console.log('line 22 of d-s', result, result.message);
+            });
         };
-    }])
+    }]);
