@@ -44,7 +44,7 @@ angular.module('scrumBoardApp.home', [])
             });
         };
         $scope.updateStatus = function () {
-            
+
         }
     }])
     .service('HomeAccounts', function ($http, $q) {
@@ -54,9 +54,16 @@ angular.module('scrumBoardApp.home', [])
                 return $q(function (resolve, reject) {
                     user.action = 'checkin';
                     user.date = new Date();
+                    $http.put('/authenticate/validate', user).success(function (data) {
+                        console.log('line 78 of h-s');
+                        _user = data.user;
+                        resolve(_userStatus);
+                    }).error(function (data) {
+                        reject(data);
+                    });
                     $http.post('/attendance/roster', user).success(function (data) {
                         _user = data.user;
-                        console.log('line 55',_user);
+                        console.log('line 59',_user);
                         resolve(_user);
                     }).error(function (data) {
                         reject(data);
@@ -66,7 +73,16 @@ angular.module('scrumBoardApp.home', [])
             checkOut: function(user){
                 return $q(function (resolve, reject) {
                     user.action = 'checkout';
+                    user.date = new Date();
+                    $http.put('/authenticate/validate', user).success(function (data) {
+                        console.log('line 78 of h-s');
+                        _user = data.user;
+                        resolve(_userStatus);
+                    }).error(function (data) {
+                        reject(data);
+                    });
                     $http.post('/attendance/roster', user).success(function (data) {
+                        console.log('line 71 of h-s');
                         _user = data.user;
                         resolve(_user);
                     }).error(function (data) {

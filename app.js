@@ -13,8 +13,8 @@ var users = require('./routes/users');
 var app = express();
 
 IpInfo(function (err, cLoc) {
-  console.log('IP:', cLoc.ip);
-  console.log('GeoLocation:', cLoc.loc);
+ // console.log('IP:', cLoc.ip);
+ // console.log('GeoLocation:', cLoc.loc);
 
 });
 
