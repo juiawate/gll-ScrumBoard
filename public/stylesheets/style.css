@@ -28,7 +28,6 @@ div{
   color: green;
 }
 
-.entryList{
-  max-height: 300px;
+.entryList, .studentList{
   overflow: auto;
 }

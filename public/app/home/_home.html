@@ -4,7 +4,7 @@
     <span id="currentTime">The current time is {{time | date : 'h:mm:ssa'}}</span>
 </div>
 
-<div class="container">
+<div class="container" ng-init="geo()">
     <br>
     <button class="btn btn-default" ng-hide="checkedin" ng-click="checkedin = !checkedin; checkIn(); showEntries();" type="button"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Check In</button>
     <button class="btn btn-default" ng-show="checkedin" ng-click="checkedin = !checkedin; checkOut(); showEntries();" type="button"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Check Out</button>
@@ -21,7 +21,7 @@
         </tr>
         <tr ng-repeat="el in dataList">
             <td>{{el.action}}</td>
-            <td>{{prettyDate(el.date)}}</td>
+            <td>{{prettyDate(el.date) | date : "MM/dd/yyyy ' at ' h:mma"}}</td>
         </tr>
         </table>
     </div>

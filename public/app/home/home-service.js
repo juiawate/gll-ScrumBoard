@@ -3,8 +3,18 @@ angular.module('scrumBoardApp.home', [])
         $scope.update(false, true, true);
         $scope.user = Accounts.user;
         $scope.prettyDate  = function(inDate){
-            var date = '' + inDate;
+            var date = new Date(inDate);
             return date;
+        };
+        $scope.geo = function(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position){
+                    $scope.$apply(function(){
+                        $scope.user.geocode = [position.coords.latitude,position.coords.longitude];
+                        console.log('line 13 of h-s',$scope.user);
+                    });
+                });
+            }
         };
         $scope.checkIn_err = false;
         $scope.checkOut_err = false;
@@ -15,6 +25,7 @@ angular.module('scrumBoardApp.home', [])
         }, 1000);
         $scope.timestamp = 0;
         $scope.checkOut = function () {
+            $scope.geo();
             $scope.timestamp = new Date();
             HomeAccounts.checkOut($scope.user).then(function (data) {
                 $location.path('/home');
@@ -25,6 +36,7 @@ angular.module('scrumBoardApp.home', [])
             });
         };
         $scope.checkIn = function () {
+            $scope.geo();
             $scope.timestamp = new Date();
             HomeAccounts.checkIn($scope.user).then(function (data) {
                 $location.path('/home');

@@ -6,37 +6,48 @@
         </div>
 
         <div class="col-md-4">
-            <h3>Students currently checked in: {{inCount}}<h3>
-                <div ng-show="presentList.length">
+            <h3>Students currently checked in: {{inCount}}</h3>
+                <div class="studentList" ng-show="presentList.length">
                     <table class="table table-bordered table-striped" ng-init="showEntries()">
                         <tr>
                             <th>User</th>
+                            <th>IP (click for map)</th>
                         </tr>
                         <tr ng-repeat="el in presentList">
                             <td>{{el.username}}</td>
+                            <td><a target="_blank" ng-href="http://maps.google.com/?ie=UTF8&hq=&ll={{el.geocode[0]}},{{el.geocode[1]}}">{{el.ipAddress}}</a></td>
                         </tr>
                     </table>
                 </div>
         </div>
     </div>
 
-    <div class="col-md-12" ng-show="dataList.length">
-        <h3>Most recent activity:</h3>
-        <div class="entryList">
-            <table class="table table-bordered table-striped" ng-init="showEntries()">
-                <tr>
-                    <th>User</th>
-                    <th>Action</th>
-                    <th>Date and Time</th>
-                    <th>Location</th>
-                </tr>
-                <tr ng-repeat="el in dataList">
-                    <td>{{el.userId}}</td>
-                    <td>{{el.action}}</td>
-                    <td>{{prettyDate(el.date)}}</td>
-                    <td>{{el.geocode}}</td>
-                </tr>
-            </table>
+    <div class="row">
+        <button type="button" class="btn btn-block" ng-click="seeLog = !seeLog;">Toggle Log</button>
+    </div>
+
+    <div class="row" ng-show="seeLog">
+        <div class="col-md-12" ng-show="!dataList.length"><h3>Log is Empty.</h3></div>
+        <div class="col-md-12" ng-show="dataList.length">
+            <h3>Most recent activity:</h3>
+            <div class="entryList">
+                <table class="table table-bordered table-striped" ng-init="showEntries()">
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Date and Time</th>
+                        <th>Location</th>
+                        <th>IP</th>
+                    </tr>
+                    <tr ng-repeat="el in dataList">
+                        <td>{{el.userId}}</td>
+                        <td>{{el.action}}</td>
+                        <td>{{prettyDate(el.date) | date : "MM/dd/yyyy ' at ' h:mma"}}</td>
+                        <td>{{el.geocode}}</td>
+                        <td>{{el.ipAddress}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>

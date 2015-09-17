@@ -2,7 +2,16 @@ var mongoose = require('mongoose'),
     passport = require('passport'),
     Members = require('./account'),
     express = require('express'),
-    router = express.Router();
+    router = express.Router(),
+    IpInfo = require("ipinfo");
+
+var location = 0;
+function getLoc (newLoc){
+    location = newLoc;
+}
+IpInfo(function (err, cLoc) {
+    getLoc(cLoc);
+});
 
 router.get('/', function(req, res) {
     if (req.user) res.status(200).json({message: req.user});
@@ -19,11 +28,13 @@ router.get('/validate', function(req, res) {
             res.status(200).json({ user: {
                 name: req.user.name,
                 id: req.user._id,
-                ipAddress: 4752374368,
+                ipAddress: location.ip,
                 userId: req.user.username,
                 date: new Date(),
                 type: req.user.type,
-                status: req.user.status
+                status: req.user.status,
+                timestamp: req.user.timestamp,
+                geocode: req.user.geocode
             } });
         }
         else res.status(401).json({user: null});
@@ -32,6 +43,8 @@ router.get('/validate', function(req, res) {
 router.patch('/status',function (req,res) {
         req.params.id = {username:req.body.userId};
         Members.find(req.params.id, function (err, p) {
+            p.timestamp = new Date();
+            p.ipAddress = location.ip;
             if(!p){
                 console.log('failed',p);
                 return undefined;
@@ -43,9 +56,7 @@ router.patch('/status',function (req,res) {
                 else if(req.body.action === 'checkin'){
                     p.status = 'in';
                 }
-                console.log('line 46 of auth-r',req.body.userId, p);
-                console.log('status from line 47 of auth-r', p.status);
-                Members.update( {username: req.body.userId},{$set:{status: p.status}},function (err) {
+                Members.update( {username: req.body.userId},{$set:{status: p.status, timestamp: p.timestamp, ipAddress: p.ipAddress, geocode: req.body.geocode}},function (err) {
                     if(err){
                         console.log('Error');
                     }

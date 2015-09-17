@@ -20,6 +20,7 @@
     "uuid": "^2.0.1",
     "passport-local-mongoose": "^1.0.1",
     "serve-favicon": "~2.3.0",
-    "ipinfo": "latest"
+    "ipinfo": "latest",
+    "google-maps": "latest"
   }
 }
