@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 var IpInfo = require("ipinfo");
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var GoogleMapsLoader = require('google-maps');
 
 var app = express();
 

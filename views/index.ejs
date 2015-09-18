@@ -11,6 +11,7 @@
     <script src="/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="app/app.js"></script>
     <script src="app/mainController.js"></script>
     <script src="app/accounts/account-service.js"></script>
@@ -35,15 +36,14 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#/register" ng-hide="show.Register">Register</a></li>
-          <li><a href="#/login" ng-hide="show.Login">Login</a></li>
-          <li><a href="#/" ng-hide="show.Logout" ng-click="logout()">Logout</a></li>
+          <li><a href="#/register" ng-hide="show.Register"><button class="btn btn-info">Register</button></a></li>
+          <li><a href="#/login" ng-hide="show.Login"><button class="btn btn-info">Login</button></a></li>
+          <li><a href="#/" ng-hide="show.Logout" ng-click="logout()"><button class="btn btn-info">Logout</button></a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 
   <div ui-view></div>
-
   </body>
 </html>

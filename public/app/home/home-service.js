@@ -55,7 +55,15 @@ angular.module('scrumBoardApp.home', [])
             });
         };
         $scope.updateStatus = function () {
-
+            $http.get('/authenticate/validate').success(function (result) {
+                $scope.timestamp = result.user.timestamp;
+               if(result.user.status === 'in'){
+                   $scope.checkedin = true;
+               }
+                else{
+                   $scope.checkedin = false;
+               }
+            });
         }
     }])
     .service('HomeAccounts', function ($http, $q) {
