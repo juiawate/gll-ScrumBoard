@@ -58,6 +58,8 @@ div{
 
 .navbar{
   background-color: #5bc0de;
+  border: none;
+  border-radius: 0;
 }
 
 .navbar-default .navbar-brand, .navbar .nav > li > a {
@@ -72,4 +74,5 @@ li > a .btn {
 
 button{
   text-transform: uppercase;
+  margin-right: 5px;
 }

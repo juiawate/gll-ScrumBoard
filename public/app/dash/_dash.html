@@ -1,11 +1,28 @@
 
 <div class="container">
     <div class="row">
+        <!-- Highcharts Modal -->
+        <div ng-controller="HighchartController" id="highchartsModal" class="modal fade" role="dialog" ng-init="highchart()">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Weekly Chart</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="highchartContainer" style="width: 800px; height: 480px; margin: 0 auto"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-8">
             <h3>Welcome, {{user.name}}. This is your admin dashboard</h3>
             <div id="groupMap" my-dir></div>
         </div>
-
         <div class="col-md-4">
             <h3>Students currently checked in: {{inCount}}</h3>
                 <div class="studentList" ng-show="presentList.length">
@@ -27,12 +44,13 @@
 
     <div class="row top-buffer">
         <div class="col-md-12">
-            <button type="button" class="btn btn-info" ng-click="seeLog = !seeLog;">Timestamp Log</button>
+            <button type="button" class="btn btn-info" ng-click="seeLog = !seeLog;">Timestamp Log</button><button type="button" class="btn btn-info" data-toggle="modal" data-target="#highchartsModal">Highcharts</button>
         </div>
     </div>
 
+
+
     <div class="row" ng-show="seeLog">
-        <div class="col-md-12" ng-show="!dataList.length"><h3>Log is Empty.</h3></div>
         <div class="col-md-12" ng-show="dataList.length">
             <h3>Most recent activity:</h3>
             <div class="entryList">

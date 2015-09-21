@@ -66,6 +66,51 @@ angular.module('scrumBoardApp.dash', [])
             };
         };
     }])
+    .controller('HighchartController', ['$scope', function($scope){
+        $scope.highchart = function() {
+            $('#highchartContainer').highcharts({
+                title: {
+                    text: 'Weekly Working Hours',
+                    x: -20 //center
+                },
+                xAxis: {
+                    categories: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri']
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Hours'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ' Hours'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 1
+                },
+                series: [{
+                    name: 'Ronak',
+                    data: [7.0, 6.5, 8, 6, 5.5]
+                }, {
+                    name: 'Natalie',
+                    data: [7, 6, 7.5, 8, 5]
+                }, {
+                    name: 'Charles',
+                    data: [4, 8, 8, 7, 6]
+                }, {
+                    name: 'Lakshmi',
+                    data: [5, 7, 5.5, 7.5, 7]
+                }]
+            });
+        };
+    }])
     .directive('myDir', ['$compile', 'svc', function ($compile, svc) {
         return{
             scope: true,
