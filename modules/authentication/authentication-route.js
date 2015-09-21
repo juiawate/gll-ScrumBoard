@@ -23,6 +23,19 @@ router.get('/all', function (req,res) {
     });
 });
 
+router.get('/dash', function (req,res) {
+    console.log('line 27 of auth-r:',req.user);
+    if(req.user.type === 'Admin'){
+        res.status(200).json({message: req.user});
+    }
+    else{
+        console.log('forbidden');
+        res.redirect('/#/home');
+        res.status(403);
+    }
+
+});
+
 router.get('/validate', function(req, res) {
         if (req.user){
             res.status(200).json({ user: {
@@ -95,7 +108,8 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
         res.status(200).json({user: {
             name: req.user.name,
             id: req.user._id,
-            userId: req.user.username
+            userId: req.user.username,
+            type: req.user.type
         }});
     }
 });

@@ -16,9 +16,14 @@ angular.module('scrumBoardApp.dash', [])
         return service;
     }])
     .controller('DashController', ['$scope', '$interval', '$http', '$location', 'Accounts', 'svc', function ($scope, $interval, $http, $location, Accounts, svc) {
-        svc.initMap();
         $scope.update(false, true, true);
         $scope.user = Accounts.user;
+        if($scope.user.type !== 'Admin'){
+            $http.get('/403').success(function (result) {
+                console.log('line 23 of d-s:');
+            });
+            window.location = './#/home';
+        }
         $scope.seeLog = false;
         $scope.maps = [];
         $scope.prettyDate  = function(inDate){

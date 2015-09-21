@@ -22,9 +22,13 @@ angular.module('scrumBoardApp.accounts', [])
         $scope.user = {};
         $scope.login_err = false;
         $scope.login = function () {
-            console.log($scope.user);
             Accounts.login($scope.user).then(function (data) {
-                $location.path('/home');
+                    if(data.user.type === 'Admin'){
+                        $location.path('/dash');
+                    }
+                    else{
+                        $location.path('/home');
+                    }
             }, function (data) {
                 $scope.login_err = true;
                 $scope.user = {};

@@ -44,6 +44,12 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/attendance', require('./modules/attendance/attendance-route'));
 
+app.use('/403', function (req,res,next) {
+  var err = new Error('Forbidden');
+  err.status = 403;
+  next(err);
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -57,6 +63,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log('line 61 of app:', err.status);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -68,6 +75,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  console.log('line 73 of app:', err);
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
