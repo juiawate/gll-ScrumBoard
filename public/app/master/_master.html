@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" ng-init="getMembers()">
+            <h3>Master List</h3>
+            <div class="entryList">
+                <table class="table table-bordered table-striped" ng-init="showEntries()">
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Team</th>
+                        <th>Type</th>
+                        <th>Email</th>
+                        <th>GitHub URL</th>
+                    </tr>
+                    <tr ng-repeat="el in memberList">
+                        <td><span ng-click="el.edit=!el.edit;" ng-hide="el.edit">{{el.name}}</span><input type="text" ng-model="el.name" ng-show="el.edit"><button class="btn btn-info" ng-show="el.edit" ng-click="saveInfo(el.username, el.name, 'name'); el.edit=!el.edit">Save</button></td>
+                        <td><span>{{el.username}}</td>
+                        <td><span ng-click="el.edit=!el.edit;" ng-hide="el.edit">{{el.team}}</span><input type="text" ng-model="el.team" ng-show="el.edit"><button class="btn btn-info" ng-show="el.edit" ng-click="saveInfo(el.username, el.team, 'team'); el.edit=!el.edit">Save</button></td>
+                        <td><span ng-click="el.edit=!el.edit;" ng-hide="el.edit">{{el.type}}</span><input type="text" ng-model="el.type" ng-show="el.edit"><button class="btn btn-info" ng-show="el.edit" ng-click="saveInfo(el.username, el.type, 'type'); el.edit=!el.edit">Save</button></td>
+                        <td><span ng-click="el.edit=!el.edit;" ng-hide="el.edit">{{el.email}}</span><input type="text" ng-model="el.email" ng-show="el.edit"><button class="btn btn-info" ng-show="el.edit" ng-click="saveInfo(el.username, el.email, 'email'); el.edit=!el.edit">Save</button></td>
+                        <td><span ng-click="el.edit=!el.edit;" ng-hide="el.edit">{{el.url_git}}</span><input type="text" ng-model="el.url_git" ng-show="el.edit"><button class="btn btn-info" ng-show="el.edit" ng-click="saveInfo(el.username, el.url_git, 'url_git'); el.edit=!el.edit">Save</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

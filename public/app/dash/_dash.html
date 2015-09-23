@@ -23,16 +23,18 @@
             <h3>Welcome, {{user.name}}. This is your admin dashboard</h3>
             <div id="groupMap" my-dir></div>
         </div>
-        <div class="col-md-4">
-            <h3>Students currently checked in: {{inCount}}</h3>
-                <div class="studentList" ng-show="presentList.length">
+        <div class="col-md-4" ng-init="whosIn()">
+            <h3>Teammates checked in: {{inCount}}</h3>
+                <div class="studentList" ng-show="memberList.length">
                     <table class="table table-striped" ng-init="showEntries()">
                         <tr>
+                            <th></th>
                             <th>User</th>
                             <th>Time Logged</th>
                             <th>IP</th>
                         </tr>
-                        <tr ng-repeat="el in presentList">
+                        <tr ng-repeat="el in memberList">
+                            <td><span class="glyphicon glyphicon-record green" ng-show="lightStatus(el.status)"></span></td>
                             <td>{{el.username}}</td>
                             <td>{{timeIn(el.timestamp)}}</td>
                             <td>{{el.ipAddress}}</td>

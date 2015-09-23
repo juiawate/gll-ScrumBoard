@@ -42,6 +42,10 @@ div{
   overflow: auto;
 }
 
+.home{
+  max-height: 300px;
+}
+
 #groupMap{
   height: 400px;
 }
@@ -75,4 +79,12 @@ li > a .btn {
 button{
   text-transform: uppercase;
   margin-right: 5px;
+}
+
+.green{
+  color: green;
+}
+
+table tr td:first-child {
+  text-align: center;
 }

@@ -18,9 +18,8 @@ angular.module('scrumBoardApp.dash', [])
     .controller('DashController', ['$scope', '$interval', '$http', '$location', 'Accounts', 'svc', function ($scope, $interval, $http, $location, Accounts, svc) {
         $scope.update(false, true, true);
         $scope.user = Accounts.user;
-        if($scope.user.type !== 'Admin'){
+        if($scope.user.type !== 'Admin' && $scope.user.type !== 'Master'){
             $http.get('/403').success(function (result) {
-                console.log('line 23 of d-s:');
             });
             window.location = './#/home';
         }
@@ -30,19 +29,28 @@ angular.module('scrumBoardApp.dash', [])
             var date = new Date(inDate);
             return date;
         };
+        $scope.whosIn = function(){
+            $http.get('/authenticate/all/in').success(function (result) {
+                $scope.inCount = result.message.length;
+            });
+        };
         $scope.showEntries = function () {
             var url = '/attendance/roster';
             $http.get(url).success(function (result) {
                 $scope.dataList = result;
             });
-            $http.get('/authenticate/all').success(function (result) {
-                $scope.inCount = result.message.length;
-                $scope.presentList = result.message;
-                $scope.presentList.forEach(function (member) {
-                    $scope.maps.push(member);
+            $http.get('/authenticate/all/members').success(function (result) {
+                $scope.memberList = result.message;
+                $scope.memberList.forEach(function (member) {
+                    if (member.status === 'in'){
+                        $scope.maps.push(member);
+                    }
                 });
             });
             $scope.timeIn = function(inTime){
+                if (typeof inTime === 'undefined'){
+                    return undefined;
+                }
                 var currentTime = new Date();
                 inTime = new Date(inTime);
                 if(inTime.getFullYear() === currentTime.getFullYear() && inTime.getMonth() === currentTime.getMonth() && inTime.getDate() === currentTime.getDate()){
@@ -65,6 +73,12 @@ angular.module('scrumBoardApp.dash', [])
                 }
             };
         };
+        $scope.lightStatus = function (status) {
+            if (status === 'in'){
+                return true;
+            }
+            else return false;
+        }
     }])
     .controller('HighchartController', ['$scope', function($scope){
         $scope.highchart = function() {

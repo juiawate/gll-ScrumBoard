@@ -18,6 +18,18 @@ router.get('/', function(req, res) {
 });
 
 router.get('/all', function (req,res) {
+    Members.find(function(err, p){
+        if (p) res.status(200).json({message: p});
+    });
+});
+
+router.get('/all/members', function (req,res) {
+    Members.find({type: "Member"}, function(err, p){
+        if (p) res.status(200).json({message: p});
+    });
+});
+
+router.get('/all/in', function (req,res) {
     Members.find({type: "Member", status:"in"}, function(err, p){
         if (p) res.status(200).json({message: p});
     });
@@ -47,11 +59,35 @@ router.get('/validate', function(req, res) {
                 type: req.user.type,
                 status: req.user.status,
                 timestamp: req.user.timestamp,
-                geocode: req.user.geocode
+                geocode: req.user.geocode,
+                email: req.user.email,
+                url_git: req.user.url_git
             } });
         }
         else res.status(401).json({user: null});
     });
+
+router.patch('/edit', function (req,res) {
+    req.params.id = {username:req.body.userId};
+    var setModifier = { $set: {}};
+    setModifier.$set[req.body.key] = req.body.value;
+    Members.find(req.params.id, function (err, p) {
+        if(!p){
+            console.log('failed',p);
+            return undefined;
+        }
+        else{
+            Members.update({username: req.body.userId},setModifier,function (err) {
+                if(err){
+                    console.log('Error');
+                }
+                else{
+                    console.log('Successful edit.');
+                }
+            });
+        }
+    });
+});
 
 router.patch('/status',function (req,res) {
         req.params.id = {username:req.body.userId};

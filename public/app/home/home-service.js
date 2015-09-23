@@ -76,7 +76,6 @@ angular.module('scrumBoardApp.home', [])
                     user.date = new Date();
                     $http.patch('/authenticate/status', user).success(function (data) {
                         _user = data.user;
-                        console.log()
                         resolve(_user);
                     }).error(function (data) {
                         reject(data);

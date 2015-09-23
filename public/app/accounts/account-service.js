@@ -8,6 +8,7 @@ angular.module('scrumBoardApp.accounts', [])
             $scope.user.status = 'out';
             Accounts.register($scope.user).success(function (data) {
                 $scope.registration_err = false;
+                console.log('line 11 of acc-s:', $scope.user);
                 $scope.user = {};
                 $location.path('/login');
             }).error(function (data) {

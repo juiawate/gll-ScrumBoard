@@ -1,5 +1,5 @@
 
-angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home', 'scrumBoardApp.dash', 'ui.router']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home', 'scrumBoardApp.dash', 'scrumBoardApp.master', 'ui.router']).config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('register', {
             url: '/register',
@@ -25,13 +25,20 @@ angular.module('scrumBoardApp', ['scrumBoardApp.accounts', 'scrumBoardApp.home',
             url: '/dash',
             templateUrl: 'app/dash/_dash.html',
             controller: 'DashController'
+        }).state('master', {
+            url: '/master',
+            templateUrl: 'app/master/_master.html',
+            controller: 'MasterController'
         });
     $urlRouterProvider.otherwise('/');
 }).run(function (Accounts, $location) {
     Accounts.validate().then(function (results) {
         if(results) {
             Accounts.user = results;
-            if(Accounts.user.type === 'Admin'){
+            if(Accounts.user.type === 'Master'){
+                $location.path('/master');
+            }
+            else if(Accounts.user.type === 'Admin'){
                 $location.path('/dash');
             }
             else{
