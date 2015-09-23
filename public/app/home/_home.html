@@ -1,28 +1,34 @@
-
 <div class="container">
-    <h3>Welcome, {{user.name}}</h3>
-    <span id="currentTime">The current time is {{time | date : 'h:mm:ssa'}}</span>
-</div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Welcome, {{user.name}}</h3>
+            <span id="currentTime">The current time is {{time | date : 'h:mm:ssa'}}</span>
+        </div>
+    </div>
 
-<div class="container" ng-init="updateStatus(); geo();">
-    <br>
-    <button class="btn btn-info" ng-hide="checkedin" ng-click="checkedin = !checkedin; checkIn(); showEntries();" type="button"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Check In</button>
-    <button class="btn btn-info" ng-show="checkedin" ng-click="checkedin = !checkedin; checkOut(); showEntries();" type="button"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Check Out</button>
-    <span class="inOn" ng-show="checkedin">Checked in on {{timestamp | date : "MM/dd/yyyy ' at ' h:mma"}}</span>
-</div>
+    <div class="row" ng-init="updateStatus(); geo();">
+        <div class="col-md-12">
+            <button class="btn btn-info" ng-hide="checkedin" ng-click="checkedin = !checkedin; checkIn();" type="button"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Check In</button>
+            <button class="btn btn-info" ng-show="checkedin" ng-click="checkedin = !checkedin; checkOut();" type="button"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Check Out</button>
+            <span class="inOn" ng-show="checkedin">Checked in on {{timestamp | date : "MM/dd/yyyy ' at ' h:mma"}}</span>
+        </div>
+    </div>
 
-<div class="container" ng-show="dataList.length">
-    <h3>Your previous actions:</h3>
-    <div class="entryList home">
-        <table class="table table-bordered table-striped" ng-init="showEntries()">
-        <tr>
-            <th>Action</th>
-            <th>Date and Time</th>
-        </tr>
-        <tr ng-repeat="el in dataList">
-            <td>{{el.action}}</td>
-            <td>{{prettyDate(el.date) | date : "MM/dd/yyyy ' at ' h:mma"}}</td>
-        </tr>
-        </table>
+    <div class="row" ng-init="showEntries()">
+        <div class="col-md-12" ng-show="dataList.length">
+            <h3>Your previous actions:</h3>
+            <div class="entryList home">
+                <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Action</th>
+                    <th>Date and Time</th>
+                </tr>
+                <tr ng-repeat="el in dataList">
+                    <td>{{el.action}}</td>
+                    <td>{{prettyDate(el.date) | date : "MM/dd/yyyy ' at ' h:mma"}}</td>
+                </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

@@ -21,17 +21,19 @@ router.get('/', function(req, res) {
 
 router.route('/roster')
     .post(function(req, res) {
-        console.log('line 23 of att-r', req.body);
         req.body.ipAddress = location.ip;
+        req.body.team = req.user.team;
         new attendance(req.body).save(function(err, result){
             if(err) res.status(500).json(err);
             else res.status(200).json(result);
         });
     })
     .get(function(req, res) {
+        console.log('line 32 of att-r' + req + ' : ' + req.user + ', ' + req.query);
         attendance.find(req.query, function (err, result) {
+            console.log('line 34 of att-r:', result);
             if(err) res.status(500).json(err);
-            else res.status(200).json(result);
+            else res.status(200).json({message: result});
         }).sort({"date": -1});
     });
 

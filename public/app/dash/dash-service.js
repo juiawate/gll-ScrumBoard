@@ -7,6 +7,7 @@ angular.module('scrumBoardApp.dash', [])
             lat: 0,
             lng: 0,
             initMap: function (lat, lng) {
+                console.log('line 10 of d-s', lat, lng);
                 lat = typeof lat !== 'undefined' ? lat : 37.3763019;
                 lng = typeof lng !== 'undefined' ? lng : -122.0306044;
                 this.lat = lat;
@@ -24,6 +25,7 @@ angular.module('scrumBoardApp.dash', [])
             window.location = './#/home';
         }
         $scope.seeLog = false;
+        $scope.zooming = false;
         $scope.maps = [];
         $scope.prettyDate  = function(inDate){
             var date = new Date(inDate);
@@ -78,7 +80,14 @@ angular.module('scrumBoardApp.dash', [])
                 return true;
             }
             else return false;
-        }
+        };
+        $scope.zoomTo = function (coords) {
+            $scope.zooming = !$scope.zooming;
+            if($scope.zooming){
+                svc.initMap(coords[0],coords[1]);
+                console.log('zooming...', $scope.zooming);
+            }
+        };
     }])
     .controller('HighchartController', ['$scope', function($scope){
         $scope.highchart = function() {
@@ -138,19 +147,25 @@ angular.module('scrumBoardApp.dash', [])
                     var markers = [];
                     scope.$watch( function () {
                         markers.length = 0;
-                        scope.maps.forEach(function (member) {
-                            var marker = new google.maps.Marker({
-                                position: {lat: member.geocode[0], lng: member.geocode[1]},
-                                map: map,
-                                title: member.username,
-                                icon: '../images/user-icon.png'
+                        if (scope.zooming){
+                            map.setCenter({lat:svc.lat,lng:svc.lng});
+                            map.setZoom(16);
+                        }
+                        else{
+                            scope.maps.forEach(function (member) {
+                                var marker = new google.maps.Marker({
+                                    position: {lat: member.geocode[0], lng: member.geocode[1]},
+                                    map: map,
+                                    title: member.username,
+                                    icon: '../images/user-icon.png'
+                                });
+                                markers.push(marker);
+                                for(i=0;i<markers.length;i++) {
+                                    bounds.extend(markers[i].getPosition());
+                                }
+                                map.fitBounds(bounds);
                             });
-                            markers.push(marker);
-                            for(i=0;i<markers.length;i++) {
-                                bounds.extend(markers[i].getPosition());
-                            }
-                            map.fitBounds(bounds);
-                        });
+                        }
                     })
                 });
             }

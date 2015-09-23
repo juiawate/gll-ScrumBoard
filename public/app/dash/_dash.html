@@ -1,6 +1,6 @@
 
 <div class="container">
-    <div class="row">
+    <div class="row" ng-controller="DashController">
         <!-- Highcharts Modal -->
         <div ng-controller="HighchartController" id="highchartsModal" class="modal fade" role="dialog" ng-init="highchart()">
             <div class="modal-dialog modal-lg">
@@ -34,10 +34,10 @@
                             <th>IP</th>
                         </tr>
                         <tr ng-repeat="el in memberList">
-                            <td><span class="glyphicon glyphicon-record green" ng-show="lightStatus(el.status)"></span></td>
+                            <td><span class="glyphicon glyphicon-record green" ng-show="lightStatus(el.status)" ng-click="zoomTo(el.geocode)"></span></td>
                             <td>{{el.username}}</td>
-                            <td>{{timeIn(el.timestamp)}}</td>
-                            <td>{{el.ipAddress}}</td>
+                            <td><span ng-show="el.status === 'in'">{{timeIn(el.status,el.timestamp)}}</span></td>
+                            <td><span ng-show="el.status === 'in'">{{el.ipAddress}}</span></td>
                         </tr>
                     </table>
                 </div>

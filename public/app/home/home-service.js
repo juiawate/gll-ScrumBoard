@@ -34,6 +34,7 @@ angular.module('scrumBoardApp.home', [])
                 $scope.user = {};
                 if (data.message) $scope.error_msg = data.message;
             });
+            $scope.showEntries();
         };
         $scope.checkIn = function () {
             $scope.geo();
@@ -46,10 +47,10 @@ angular.module('scrumBoardApp.home', [])
                 if (data.message) $scope.error_msg = data.message;
             });
             console.log('checkin line 36:', $scope.user.userId);
+            $scope.showEntries();
         };
-        $scope.showEntries = function (name) {
-            name = $scope.user.userId;
-            var url = '/attendance/roster?userId=' + name;
+        $scope.showEntries = function () {
+            var url = '/attendance/roster?userId=' + $scope.user.userId;
             $http.get(url).success(function (result) {
                 $scope.dataList = result;
             });
@@ -72,7 +73,7 @@ angular.module('scrumBoardApp.home', [])
             checkIn: function(user){
                 return $q(function (resolve, reject) {
                     user.action = 'checkin';
-                    console.log('line55 of h-s', user.userId);
+                    console.log('line55 of h-s', user);
                     user.date = new Date();
                     $http.patch('/authenticate/status', user).success(function (data) {
                         _user = data.user;

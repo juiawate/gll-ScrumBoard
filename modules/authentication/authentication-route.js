@@ -24,13 +24,13 @@ router.get('/all', function (req,res) {
 });
 
 router.get('/all/members', function (req,res) {
-    Members.find({type: "Member"}, function(err, p){
+    Members.find({type: "Member", team: req.user.team}, function(err, p){
         if (p) res.status(200).json({message: p});
     });
 });
 
 router.get('/all/in', function (req,res) {
-    Members.find({type: "Member", status:"in"}, function(err, p){
+    Members.find({type: "Member", status:"in", team: req.user.team}, function(err, p){
         if (p) res.status(200).json({message: p});
     });
 });
@@ -61,7 +61,8 @@ router.get('/validate', function(req, res) {
                 timestamp: req.user.timestamp,
                 geocode: req.user.geocode,
                 email: req.user.email,
-                url_git: req.user.url_git
+                url_git: req.user.url_git,
+                team: req.user.team
             } });
         }
         else res.status(401).json({user: null});
@@ -93,6 +94,7 @@ router.patch('/status',function (req,res) {
         req.params.id = {username:req.body.userId};
         Members.find(req.params.id, function (err, p) {
             p.timestamp = new Date();
+            p.team = req.body.team;
             p.ipAddress = location.ip;
             if(!p){
                 console.log('failed',p);

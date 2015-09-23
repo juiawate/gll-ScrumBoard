@@ -24,12 +24,15 @@ angular.module('scrumBoardApp.accounts', [])
         $scope.login_err = false;
         $scope.login = function () {
             Accounts.login($scope.user).then(function (data) {
-                    if(data.user.type === 'Admin'){
-                        $location.path('/dash');
-                    }
-                    else{
-                        $location.path('/home');
-                    }
+                if(data.user.type === 'Master'){
+                    $location.path('/master');
+                }
+                else if(data.user.type === 'Admin'){
+                    $location.path('/dash');
+                }
+                else{
+                    $location.path('/home');
+                }
             }, function (data) {
                 $scope.login_err = true;
                 $scope.user = {};

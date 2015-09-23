@@ -7,7 +7,8 @@ var Attendance = new Schema({
     userId: String, // TODO: use ObjectId instead of String
     action: String,  // checkin or checkout
     geocode: Array,  // ["latitude, longitude"]
-    ipAddress: String
+    ipAddress: String,
+    team: String
 });
 
 module.exports = mongoose.model('Attendance', Attendance);
